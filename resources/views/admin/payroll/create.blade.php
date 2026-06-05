@@ -13,18 +13,16 @@
             </div>
         @endif
 
-        <form method="POST" class="bg-white rounded-xl shadow p-6 space-y-4">
+        <form method="POST" action="{{ route('admin.payroll.store') }}" class="bg-white rounded-xl shadow p-6 space-y-4">
             @csrf
             <div>
                 <label class="block text-sm font-medium mb-1">Employee</label>
                 <select name="user_id" class="w-full border rounded px-3 py-2" required>
                     <option value="">Select Employee</option>
                     @foreach ($employees as $emp)
-                        @if (!in_array($emp->id, $existing))
-                            <option value="{{ $emp->id }}" data-role="{{ $emp->role->slug ?? '' }}" data-salary="{{ match($emp->role?->slug) { 'admin' => 1500000, 'manager' => 800000, 'receptionist' => 400000, default => 300000 } }}">
-                                {{ $emp->name }} ({{ ucfirst($emp->role->slug ?? 'N/A') }}) @if($emp->bankDetail) &check; @endif
-                            </option>
-                        @endif
+                        <option value="{{ $emp->id }}" data-role="{{ $emp->role->slug ?? '' }}" data-salary="{{ match($emp->role?->slug) { 'admin' => 1500000, 'manager' => 800000, 'receptionist' => 400000, default => 300000 } }}">
+                            {{ $emp->name }} ({{ ucfirst($emp->role->slug ?? 'N/A') }}) @if($emp->bankDetail) &check; @endif
+                        </option>
                     @endforeach
                 </select>
                 <p class="text-xs text-gray-400 mt-1">Employees already with payroll this month are hidden.</p>
