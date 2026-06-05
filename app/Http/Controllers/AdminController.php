@@ -67,10 +67,9 @@ class AdminController extends Controller
             ];
         });
 
-        $quickLinks = QuickLink::section('admin_dashboard')->get();
-        $groupedQuickLinks = $quickLinks;
+        $groupedQuickLinks = QuickLink::section('admin_dashboard')->get();
 
-        return view('admin.dashboard', compact('stats', 'recentBookings', 'revenueByMonth', 'cards', 'quickLinks', 'groupedQuickLinks'));
+        return view('admin.dashboard', compact('stats', 'recentBookings', 'revenueByMonth', 'cards', 'groupedQuickLinks'));
     }
 
     public function users()
