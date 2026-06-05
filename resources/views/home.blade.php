@@ -224,24 +224,16 @@
                         </div>
                         <p class="text-sm leading-relaxed">Your trusted partner for comfortable and luxurious accommodations. Experience the best in hospitality.</p>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-white mb-4">Quick Links</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li><a href="{{ route('home') }}" class="hover:text-white transition">Home</a></li>
-                            <li><a href="{{ route('rooms.index') }}" class="hover:text-white transition">Rooms</a></li>
-                            <li><a href="{{ route('services.index') }}" class="hover:text-white transition">Services</a></li>
-                            <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white mb-4">Contact</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li>Ngongona, Dodoma</li>
-                            <li>Tanzania</li>
-                            <li>+255 689 045 666</li>
-                            <li>info@bungestay.com</li>
-                        </ul>
-                    </div>
+                    @foreach ($footerLinkGroups as $groupName => $groupLinks)
+                        <div>
+                            <h4 class="font-semibold text-white mb-4">{{ $groupName }}</h4>
+                            <ul class="space-y-2 text-sm">
+                                @foreach ($groupLinks as $link)
+                                    <li><a href="{{ $link->url }}" class="hover:text-white transition">{{ $link->label }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
                     <div>
                         <h4 class="font-semibold text-white mb-4">Follow Us</h4>
                         <div class="flex gap-3">

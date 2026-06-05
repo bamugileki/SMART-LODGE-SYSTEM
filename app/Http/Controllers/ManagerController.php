@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Models\QuickLink;
 use App\Models\Review;
 use App\Models\Room;
 use App\Services\ReportService;
@@ -35,7 +36,9 @@ class ManagerController extends Controller
             ->take(6)
             ->get();
 
-        return view('manager.dashboard', compact('stats', 'recentBookings', 'monthlyRevenue'));
+        $quickLinks = QuickLink::getLinks('manager_dashboard');
+
+        return view('manager.dashboard', compact('stats', 'recentBookings', 'monthlyRevenue', 'quickLinks'));
     }
 
     public function occupancy()

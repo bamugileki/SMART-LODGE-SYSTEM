@@ -3,38 +3,46 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Admin Dashboard</h1>
             <div class="flex flex-wrap gap-2">
-                <a href="{{ route('admin.users') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Users</a>
-                <a href="{{ route('admin.rooms') }}" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition">Rooms</a>
-                <a href="{{ route('admin.bookings') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Bookings</a>
-                <a href="{{ route('admin.checkins') }}" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition">Check-ins</a>
-                <a href="{{ route('admin.payments') }}" class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Payments</a>
-                <a href="{{ route('admin.services') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Services</a>
-                <a href="{{ route('admin.reviews') }}" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Reviews</a>
-                <a href="{{ route('admin.reports') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">Reports</a>
-                <a href="{{ route('admin.settings') }}" class="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700 transition">Settings</a>
+                @foreach ($quickLinks as $link)
+                    <a href="{{ $link->url }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">{{ $link->label }}</a>
+                @endforeach
+                <a href="{{ route('admin.quick-links.index') }}" class="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700 transition">Quick Links</a>
             </div>
         </div>
 
         <div class="grid md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow p-6">
-                <p class="text-gray-500 text-sm">Total Rooms</p>
-                <p class="text-3xl font-bold">{{ $stats['total_rooms'] }}</p>
-                <p class="text-sm text-green-600">{{ $stats['available_rooms'] }} available</p>
-            </div>
-            <div class="bg-white rounded-lg shadow p-6">
-                <p class="text-gray-500 text-sm">Total Bookings</p>
-                <p class="text-3xl font-bold">{{ $stats['total_bookings'] }}</p>
-                <p class="text-sm text-yellow-600">{{ $stats['pending_bookings'] }} pending</p>
-            </div>
-            <div class="bg-white rounded-lg shadow p-6">
-                <p class="text-gray-500 text-sm">Revenue</p>
-                <p class="text-3xl font-bold text-green-600">TSh{{ number_format($stats['total_revenue'], 2) }}</p>
-            </div>
-            <div class="bg-white rounded-lg shadow p-6">
-                <p class="text-gray-500 text-sm">Occupancy Rate</p>
-                <p class="text-3xl font-bold">{{ number_format($stats['occupancy_rate'], 1) }}%</p>
-                <p class="text-sm text-blue-600">{{ $stats['active_guests'] }} active guests</p>
-            </div>
+            @foreach ($cards as $card)
+                <a href="{{ $card->url }}" class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition block">
+                    <p class="text-gray-500 text-sm">{{ $card->label }}</p>
+                    <p class="text-3xl font-bold">{{ $card->value }}</p>
+                    @if ($card->sub_text)
+                        <p class="text-sm {{ $card->sub_color ?? 'text-gray-500' }}">{{ $card->sub_text }}</p>
+                    @endif
+                </a>
+            @endforeach
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            @php
+                $groupedLinks = $groupedQuickLinks->groupBy(fn($l) => $l->group ?? 'General');
+            @endphp
+            @foreach ($groupedLinks as $groupName => $groupLinks)
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">{{ $groupName }}</h3>
+                    <ul class="space-y-2">
+                        @foreach ($groupLinks as $link)
+                            <li>
+                                <a href="{{ $link->url }}" class="text-gray-700 hover:text-indigo-600 transition flex items-center gap-2">
+                                    @if ($link->icon)
+                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    @endif
+                                    {{ $link->label }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">

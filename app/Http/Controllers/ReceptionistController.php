@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\CheckIn;
 use App\Models\Payment;
+use App\Models\QuickLink;
 use App\Models\Room;
 use App\Models\User;
 use App\Services\BookingService;
@@ -31,7 +32,9 @@ class ReceptionistController extends Controller
 
         $availableRooms = Room::where('status', 'available')->count();
 
-        return view('receptionist.dashboard', compact('todayBookings', 'activeStays', 'upcomingCheckouts', 'availableRooms'));
+        $quickLinks = QuickLink::getLinks('receptionist_dashboard');
+
+        return view('receptionist.dashboard', compact('todayBookings', 'activeStays', 'upcomingCheckouts', 'availableRooms', 'quickLinks'));
     }
 
     public function searchBooking(Request $request)

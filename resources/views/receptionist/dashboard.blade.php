@@ -98,7 +98,25 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow mt-6">
+        <div class="mt-8 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+                @foreach ($quickLinks as $link)
+                    <a href="{{ $link->url }}" class="bg-white rounded-lg shadow p-4 hover:shadow-md transition flex items-center gap-3">
+                        @if ($link->icon)
+                            <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <span class="font-medium text-sm">{{ $link->label }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow">
             <div class="p-6 border-b"><h2 class="text-xl font-semibold">All Rooms Status</h2></div>
             <div class="p-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 @php $rooms = \App\Models\Room::with('roomType')->where('is_active', true)->get(); @endphp

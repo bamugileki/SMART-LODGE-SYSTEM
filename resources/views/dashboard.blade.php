@@ -16,29 +16,19 @@
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 mb-8">
-            <a href="{{ route('wishlist.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-md transition flex items-center gap-4">
-                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                    <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-lg">Saved Rooms</h3>
-                    <p class="text-sm text-gray-500">View your favorite rooms</p>
-                </div>
-            </a>
-            <a href="{{ route('bookings.index') }}" class="bg-white rounded-lg shadow p-6 hover:shadow-md transition flex items-center gap-4">
-                <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
-                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-lg">Booking History</h3>
-                    <p class="text-sm text-gray-500">View past and upcoming bookings</p>
-                </div>
-            </a>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            @foreach ($quickLinks as $link)
+                <a href="{{ $link->url }}" class="bg-white rounded-lg shadow p-4 hover:shadow-md transition flex items-center gap-3">
+                    @if ($link->icon)
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                        </div>
+                    @endif
+                    <span class="font-medium text-sm">{{ $link->label }}</span>
+                </a>
+            @endforeach
         </div>
 
         <div class="bg-white rounded-lg shadow">
@@ -54,7 +44,7 @@
                             <p class="text-sm text-gray-500">{{ $booking->check_in->format('M d') }} - {{ $booking->check_out->format('M d, Y') }}</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-sm font-medium ${{ $booking->status === 'confirmed' ? 'text-green-600' : ($booking->status === 'pending' ? 'text-yellow-600' : 'text-gray-600') }}">
+                            <span class="text-sm font-medium {{ $booking->status === 'confirmed' ? 'text-green-600' : ($booking->status === 'pending' ? 'text-yellow-600' : 'text-gray-600') }}">
                                 {{ ucfirst($booking->status) }}
                             </span>
                             <p class="font-bold">TSh{{ number_format($booking->total, 2) }}</p>

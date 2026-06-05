@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\CheckIn;
 use App\Models\Payment;
+use App\Models\QuickLink;
 use App\Models\Review;
 use App\Models\Role;
 use App\Models\Room;
@@ -43,7 +44,33 @@ class AdminController extends Controller
             ->orderBy('month')
             ->pluck('total', 'month');
 
-        return view('admin.dashboard', compact('stats', 'recentBookings', 'revenueByMonth'));
+        $cardValues = [
+            'Total Bookings' => ['value' => $stats['total_bookings'], 'sub' => "{$stats['pending_bookings']} pending", 'color' => 'text-yellow-600'],
+            'Available Rooms' => ['value' => $stats['available_rooms'], 'sub' => "out of {$stats['total_rooms']} rooms", 'color' => 'text-green-600'],
+            'Occupied Rooms' => ['value' => Room::where('status', 'occupied')->count(), 'sub' => 'currently occupied', 'color' => 'text-red-600'],
+            "Today's Revenue" => ['value' => 'TSh' . number_format(Payment::whereDate('created_at', today())->where('status', 'paid')->sum('amount'), 2), 'sub' => 'today', 'color' => 'text-green-600'],
+            'Total Guests' => ['value' => $stats['active_guests'], 'sub' => 'active stays', 'color' => 'text-blue-600'],
+            'Pending Check-Ins' => ['value' => Booking::where('status', 'confirmed')->whereDate('check_in', today())->count(), 'sub' => 'today', 'color' => 'text-yellow-600'],
+            'Pending Check-Outs' => ['value' => Booking::where('status', 'checked_in')->whereDate('check_out', today())->count(), 'sub' => 'today', 'color' => 'text-orange-600'],
+            'System Alerts' => ['value' => \App\Models\AuditLog::whereDate('created_at', today())->count(), 'sub' => 'events today', 'color' => 'text-gray-600'],
+        ];
+
+        $cardLinks = QuickLink::section('admin_cards')->get();
+        $cards = $cardLinks->map(function ($link) use ($cardValues) {
+            $data = $cardValues[$link->label] ?? ['value' => '0', 'sub' => null, 'color' => null];
+            return (object) [
+                'label' => $link->label,
+                'url' => $link->url,
+                'value' => $data['value'],
+                'sub_text' => $data['sub'],
+                'sub_color' => $data['color'],
+            ];
+        });
+
+        $quickLinks = QuickLink::section('admin_dashboard')->get();
+        $groupedQuickLinks = $quickLinks;
+
+        return view('admin.dashboard', compact('stats', 'recentBookings', 'revenueByMonth', 'cards', 'quickLinks', 'groupedQuickLinks'));
     }
 
     public function users()

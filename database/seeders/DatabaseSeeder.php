@@ -103,5 +103,7 @@ class DatabaseSeeder extends Seeder
         foreach ($defaultSettings as $setting) {
             Setting::create($setting);
         }
+
+        $this->call(QuickLinkSeeder::class);
     }
 }

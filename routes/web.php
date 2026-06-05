@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuickLinkController;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoomController;
@@ -107,6 +108,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/admin/payroll/{payroll}', [PayrollController::class, 'destroy'])->name('admin.payroll.destroy');
         Route::get('/admin/payroll/{payroll}/payslip', [PayrollController::class, 'downloadPayslip'])->name('admin.payroll.payslip');
         Route::get('/admin/audit-logs', [AuditLogController::class, 'index'])->name('admin.audit-logs');
+        Route::get('/admin/quick-links', [QuickLinkController::class, 'index'])->name('admin.quick-links.index');
+        Route::get('/admin/quick-links/create', [QuickLinkController::class, 'create'])->name('admin.quick-links.create');
+        Route::post('/admin/quick-links', [QuickLinkController::class, 'store'])->name('admin.quick-links.store');
+        Route::get('/admin/quick-links/{quickLink}/edit', [QuickLinkController::class, 'edit'])->name('admin.quick-links.edit');
+        Route::put('/admin/quick-links/{quickLink}', [QuickLinkController::class, 'update'])->name('admin.quick-links.update');
+        Route::delete('/admin/quick-links/{quickLink}', [QuickLinkController::class, 'destroy'])->name('admin.quick-links.destroy');
     });
 
     Route::middleware('role:manager,admin')->group(function () {
