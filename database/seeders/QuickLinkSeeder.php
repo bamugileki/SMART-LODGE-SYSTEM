@@ -15,19 +15,19 @@ class QuickLinkSeeder extends Seeder
             ['label' => 'Rooms', 'url' => '/rooms', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 2],
             ['label' => 'Book Now', 'url' => '/bookings/create', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 3, 'roles' => 'guest,receptionist,manager,admin'],
             ['label' => 'Availability', 'url' => '/rooms/search', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 4],
-            ['label' => 'Gallery', 'url' => '/#gallery', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 5],
+            ['label' => 'Gallery', 'url' => '/rooms', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 5],
             ['label' => 'Contact', 'url' => '/contact', 'section' => 'footer', 'group' => 'Quick Links', 'order' => 6],
 
             // ─── FOOTER: Guest Services ───
             ['label' => 'My Bookings', 'url' => '/bookings', 'section' => 'footer', 'group' => 'Guest Services', 'order' => 1, 'roles' => 'guest,receptionist,manager,admin'],
             ['label' => 'Payment Status', 'url' => '/payments', 'section' => 'footer', 'group' => 'Guest Services', 'order' => 2, 'roles' => 'guest,receptionist,manager,admin'],
-            ['label' => 'Cancellation Policy', 'url' => '/page/cancellation-policy', 'section' => 'footer', 'group' => 'Guest Services', 'order' => 3],
+            ['label' => 'Cancellation Policy', 'url' => '/contact', 'section' => 'footer', 'group' => 'Guest Services', 'order' => 3],
             ['label' => 'FAQ', 'url' => '/contact', 'section' => 'footer', 'group' => 'Guest Services', 'order' => 4],
 
             // ─── FOOTER: Company ───
-            ['label' => 'About Us', 'url' => '/#about', 'section' => 'footer', 'group' => 'Company', 'order' => 1],
-            ['label' => 'Privacy Policy', 'url' => '/page/privacy-policy', 'section' => 'footer', 'group' => 'Company', 'order' => 2],
-            ['label' => 'Terms & Conditions', 'url' => '/page/terms', 'section' => 'footer', 'group' => 'Company', 'order' => 3],
+            ['label' => 'About Us', 'url' => '/', 'section' => 'footer', 'group' => 'Company', 'order' => 1],
+            ['label' => 'Privacy Policy', 'url' => '/contact', 'section' => 'footer', 'group' => 'Company', 'order' => 2],
+            ['label' => 'Terms & Conditions', 'url' => '/contact', 'section' => 'footer', 'group' => 'Company', 'order' => 3],
 
             // ─── FOOTER: Support ───
             ['label' => 'WhatsApp Support', 'url' => 'https://wa.me/255689045666', 'section' => 'footer', 'group' => 'Support', 'order' => 1],
