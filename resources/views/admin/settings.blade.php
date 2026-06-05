@@ -265,6 +265,33 @@
                                 <input type="number" min="1" name="payment_timeout_minutes" value="{{ $settings['payment_timeout_minutes'] ?? '30' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
                             </div>
                         </div>
+
+                        <div class="mt-6 border-t pt-6">
+                            <h3 class="font-medium text-gray-700 mb-4">Hotel Payment Account Details</h3>
+                            <p class="text-sm text-gray-500 mb-4">These details appear on guest receipts so they know where payments were sent.</p>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-medium mb-1">Bank Name</label>
+                                    <input type="text" name="hotel_bank_name" value="{{ $settings['hotel_bank_name'] ?? '' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., CRDB, NMB, NBC">
+                                </div>
+                                <div>
+                                    <label class="block font-medium mb-1">Account Number</label>
+                                    <input type="text" name="hotel_account_number" value="{{ $settings['hotel_account_number'] ?? '' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., 0123456789">
+                                </div>
+                                <div>
+                                    <label class="block font-medium mb-1">Account Holder Name</label>
+                                    <input type="text" name="hotel_account_holder" value="{{ $settings['hotel_account_holder'] ?? '' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Business name on account">
+                                </div>
+                                <div>
+                                    <label class="block font-medium mb-1">Mobile Money Provider</label>
+                                    <input type="text" name="hotel_mobile_provider" value="{{ $settings['hotel_mobile_provider'] ?? '' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., Vodacom, Airtel, Tigo">
+                                </div>
+                                <div>
+                                    <label class="block font-medium mb-1">Mobile Money Number</label>
+                                    <input type="text" name="hotel_mobile_number" value="{{ $settings['hotel_mobile_number'] ?? '' }}" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., 0712345678">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {{-- Tab 7: Notification Settings --}}

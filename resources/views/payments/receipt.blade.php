@@ -122,6 +122,26 @@
                 @endif
             </div>
 
+            {{-- Account Details --}}
+            @php $method = $payment->method; @endphp
+            @if (in_array($method, ['bank_transfer', 'mobile_money', 'stripe']))
+                <div class="border-b pb-4 mb-4 print:pb-3 print:mb-3">
+                    <h3 class="font-semibold text-sm text-gray-700 mb-2 uppercase tracking-wide">Payment Account Details</h3>
+                    <div class="text-sm space-y-1">
+                        @if ($method === 'bank_transfer')
+                            <div class="flex justify-between"><span class="text-gray-500">Bank</span><span class="font-medium">{{ $settings['hotel_bank_name'] ?? 'N/A' }}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Account Number</span><span class="font-medium">{{ $settings['hotel_account_number'] ?? 'N/A' }}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Account Holder</span><span>{{ $settings['hotel_account_holder'] ?? 'N/A' }}</span></div>
+                        @elseif ($method === 'mobile_money')
+                            <div class="flex justify-between"><span class="text-gray-500">Provider</span><span class="font-medium">{{ $settings['hotel_mobile_provider'] ?? 'N/A' }}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Mobile Number</span><span class="font-medium">{{ $settings['hotel_mobile_number'] ?? 'N/A' }}</span></div>
+                        @elseif ($method === 'stripe')
+                            <div class="flex justify-between"><span class="text-gray-500">Card / Online Payment</span><span class="font-medium">Stripe</span></div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
             {{-- Verification Section (staff only) --}}
             @if (Auth::user()->isAdmin() || Auth::user()->isReceptionist())
                 <div class="border-t pt-4 mt-4 print:hidden">

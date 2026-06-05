@@ -115,6 +115,23 @@
         <tr><td class="label">Processed By</td><td>{{ $payment->processor?->name ?? 'System' }}</td></tr>
     </table>
 
+    @php $method = $payment->method; @endphp
+    @if (in_array($method, ['bank_transfer', 'mobile_money', 'stripe']))
+        <div class="section-title" style="margin-top: 14px;">Payment Account Details</div>
+        <table>
+            @if ($method === 'bank_transfer')
+                <tr><td class="label">Bank</td><td class="value">{{ $settings['hotel_bank_name'] ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Account Number</td><td class="value">{{ $settings['hotel_account_number'] ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Account Holder</td><td>{{ $settings['hotel_account_holder'] ?? 'N/A' }}</td></tr>
+            @elseif ($method === 'mobile_money')
+                <tr><td class="label">Provider</td><td class="value">{{ $settings['hotel_mobile_provider'] ?? 'N/A' }}</td></tr>
+                <tr><td class="label">Mobile Number</td><td class="value">{{ $settings['hotel_mobile_number'] ?? 'N/A' }}</td></tr>
+            @elseif ($method === 'stripe')
+                <tr><td class="label">Card / Online Payment</td><td class="value">Stripe</td></tr>
+            @endif
+        </table>
+    @endif
+
     @if ($payment->notes)
         <div style="margin-top: 10px; padding-top: 6px; border-top: 1px solid #ddd;">
             <div class="text-xs" style="font-weight: bold;">Notes:</div>

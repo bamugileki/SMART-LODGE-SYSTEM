@@ -341,6 +341,8 @@ class AdminController extends Controller
             // Payment
             'enable_cash', 'enable_mobile_money', 'enable_stripe',
             'payment_auto_confirm', 'refund_policy', 'payment_timeout_minutes',
+            'hotel_bank_name', 'hotel_account_number', 'hotel_account_holder',
+            'hotel_mobile_provider', 'hotel_mobile_number',
             // Notifications
             'enable_email_notifications', 'enable_sms_notifications', 'enable_whatsapp_notifications',
             'template_booking_confirmation', 'template_payment_confirmation',

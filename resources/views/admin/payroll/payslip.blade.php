@@ -31,6 +31,24 @@
         <p><strong>Role:</strong> {{ ucfirst($payroll->user->role->slug ?? 'N/A') }}</p>
     </div>
 
+    @php $bank = $payroll->user->bankDetail; @endphp
+    @if ($bank)
+        <div class="details" style="margin-top: 10px;">
+            <p><strong>Payment Method:</strong> {{ str_replace('_', ' ', ucfirst($bank->payment_type)) }}</p>
+            @if ($bank->payment_type === 'bank')
+                <p><strong>Bank:</strong> {{ $bank->bank_name ?? 'N/A' }}</p>
+                <p><strong>Account Number:</strong> {{ $bank->account_number ?? 'N/A' }}</p>
+                <p><strong>Account Holder:</strong> {{ $bank->account_holder_name ?? 'N/A' }}</p>
+            @elseif ($bank->payment_type === 'mobile_money')
+                <p><strong>Provider:</strong> {{ ucfirst($bank->mobile_provider ?? 'N/A') }}</p>
+                <p><strong>Mobile Number:</strong> {{ $bank->mobile_number ?? 'N/A' }}</p>
+            @elseif ($bank->payment_type === 'card')
+                <p><strong>Card:</strong> **** **** **** {{ $bank->card_last_four ?? 'N/A' }}</p>
+                <p><strong>Card Holder:</strong> {{ $bank->card_holder_name ?? 'N/A' }}</p>
+            @endif
+        </div>
+    @endif
+
     <table>
         <tr><th>Description</th><th class="text-right">Amount (TSh)</th></tr>
         <tr><td>Base Salary</td><td class="text-right">{{ number_format($payroll->base_salary, 2) }}</td></tr>
